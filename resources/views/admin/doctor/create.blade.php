@@ -70,7 +70,7 @@
                                         <option value="{{ $gender->id }}"> {{ $gender->name }} </option>
                                     @endforeach
                                 </select>
-                                @error('gender')
+                                @error('gender_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

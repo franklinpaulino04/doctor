@@ -136,6 +136,7 @@ class DoctorController extends Controller
         $user->department   = $request->department;
         $user->education    = $request->education;
         $user->description  = $request->description;
+        $user->gender_id    = $request->gender_id;
 
         if(!empty($request->password))
         {
@@ -157,11 +158,36 @@ class DoctorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        $response = [];
+        if((isset(auth()->user()->id)) && auth()->user()->id == $id)
+        {
+            $response = [
+                'result' => 0,
+            ];
+        }
+        else
+        {
+            $user       = User::find($id);
+            $userDelete = $user->delete();
+
+            if($userDelete)
+            {
+                if(file_exists(public_path('images/users/'.$user->image)))
+                {
+                    unlink(public_path('images/users/'.$user->image));
+                }
+
+                $response = [
+                    'result' => 1,
+                ];
+            }
+        }
+
+        return response()->json($response);
     }
 
     private function validateStorage(Request $request)

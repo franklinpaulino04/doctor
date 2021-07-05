@@ -31,3 +31,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('doctor', \App\Http\Controllers\DoctorController::class);
 Route::post('doctor/{id}', [\App\Http\Controllers\DoctorController::class, 'update']);
+Route::get('doctor/destroy/{id}', [\App\Http\Controllers\DoctorController::class, 'destroy']);

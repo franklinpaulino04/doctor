@@ -69,7 +69,7 @@
                                         <option value="{{ $gender->id }}" {{ ($gender->id == $user->gender_id )? 'selected' : '' }}> {{ $gender->name }} </option>
                                     @endforeach
                                 </select>
-                                @error('gender')
+                                @error('gender_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -62,4 +62,26 @@ $(document).ready(function() {
             });
     });
 
+    $(document).on('click', '.trigger_delete', function (){
+        let selector     = $(this),
+            optionData   = selector.data(),
+            url          = optionData.url;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(( data ) => {
+
+                let { result } = data;
+
+                if(result == 1) {
+
+                   location.reload();
+
+                }else{
+
+                    alert('not delete user for is yours');
+                }
+            });
+    });
+
 });

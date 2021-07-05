@@ -67,7 +67,7 @@
                                         </button>
                                     </a>
                                     <a href="{{ URL::to('doctor/'.$user->id) }}/edit"><i class="ik ik-edit-2"></i></a>
-                                    <a href="#"><i class="ik ik-trash-2"></i></a>
+                                    <a href="javascript:void(0)" class="trigger_delete" data-url="{{ URL::to('doctor/destroy/'.$user->id) }}"><i class="ik ik-trash-2"></i></a>
                                 </div>
                             </td>
                         </tr>
