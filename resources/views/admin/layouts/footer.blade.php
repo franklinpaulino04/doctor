@@ -92,8 +92,12 @@
     </div>
 </div>
 
+<div class="modal fade" id="user-show" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 720px;" role="document"></div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ asset("template/src/js/vendor/jquery-3.3.1.min.js") }}"></script>')
+{{--<script>window.jQuery || document.write('<script src="{{ asset("template/src/js/vendor/jquery-3.3.1.min.js") }}"></script>')--}}
 <script src="{{ asset('template/plugins/popper.js/dist/umd/popper.min.js') }}"></script>
 <script src="{{ asset('template/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('template/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>

@@ -703,6 +703,5 @@ $(document).ready(function() {
         }
     });
 
-
-
+    $('#dt-doctors').DataTable();
 });

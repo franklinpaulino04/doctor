@@ -41,4 +41,25 @@ $(document).ready(function() {
     $('input.column_filter').on( 'keyup click', function () {
         filterColumn( $(this).attr('data-column') );
     });
+
+    $(document).on('click', '.modal_trigger', function (){
+        let selector     = $(this),
+            optionData   = selector.data(),
+            target       = optionData.target,
+            url          = optionData.url;
+
+         $('modal-dialog', target).html();
+
+        fetch(url)
+            .then(response => response.json())
+            .then(( data ) => {
+
+                let { result, view } = data;
+
+                if(result == 1){
+                    $(target + ' .modal-dialog').html(view);
+                }
+            });
+    });
+
 });

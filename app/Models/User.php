@@ -49,4 +49,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->hasOne(Role::class,'id','role_id');
+    }
+
+    public function userAvatar($request)
+    {
+        $image          = $request->file('image');
+        $image_name     = $image->hashName();
+        $destination    = public_path('/images/users');
+
+        $image->move($destination, $image_name);
+
+        return $image_name;
+    }
 }
