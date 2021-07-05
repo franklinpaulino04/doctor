@@ -29,6 +29,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('doctor', \App\Http\Controllers\DoctorController::class);
-Route::post('doctor/{id}', [\App\Http\Controllers\DoctorController::class, 'update']);
-Route::get('doctor/destroy/{id}', [\App\Http\Controllers\DoctorController::class, 'destroy']);
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::resource('doctor', \App\Http\Controllers\DoctorController::class);
+    Route::post('doctor/{id}', [\App\Http\Controllers\DoctorController::class, 'update']);
+    Route::get('doctor/destroy/{id}', [\App\Http\Controllers\DoctorController::class, 'destroy']);
+});
+
