@@ -119,14 +119,15 @@ class DoctorController extends Controller
     {
         $this->validateUpdate($request, $id);
 
+        $user               = User::find($id);
         $image_name         = '';
 
         if(!empty($_FILES['image']['name']))
         {
             $image_name     = (new User())->userAvatar($request);
+            unlink(public_path('images/users/'.$user->image));
         }
 
-        $user               = User::find($id);
         $user->name         = $request->name;
         $user->email        = $request->email;
         $user->role_id      = $request->role_id;

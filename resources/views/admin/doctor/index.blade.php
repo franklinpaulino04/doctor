@@ -30,7 +30,14 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header"><h3>Doctors</h3></div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card-header"><h3>Doctors</h3></div>
+                </div>
+                <div class="col-md-2" style="margin-top: 24px; text-align: right; margin-left: -24px;">
+                    <a href="{{ URL::to('doctor/create') }}" class="btn btn-primary">Add Doctor</a>
+                </div>
+            </div>
             <div class="card-body">
                 <table id="dt-doctors" class="table">
                     <thead>
