@@ -61,13 +61,9 @@
                             <td>{{ $user->phone_number }}</td>
                             <td>
                                 <div class="table-actions">
-                                    <a href="#">
-                                        <button type="button" class="btn btn-primary modal_trigger" data-url="{{ URL::to('doctor/'.$user->id) }}" data-toggle="modal" data-target="#user-show">
-                                            <i class="ik ik-eye"></i>
-                                        </button>
-                                    </a>
+                                    <a href="javascript:void(0);" class="modal_trigger" data-url="{{ URL::to('doctor/'.$user->id) }}" data-toggle="modal" data-target="#user-show"><i class="ik ik-eye"></i></a>
                                     <a href="{{ URL::to('doctor/'.$user->id) }}/edit"><i class="ik ik-edit-2"></i></a>
-                                    <a href="javascript:void(0)" class="trigger_delete" data-url="{{ URL::to('doctor/destroy/'.$user->id) }}"><i class="ik ik-trash-2"></i></a>
+                                    <a href="javascript:void(0);" class="trigger_delete" data-url="{{ URL::to('doctor/destroy/'.$user->id) }}"><i class="ik ik-trash-2"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -83,4 +79,5 @@
         </div>
     </div>
 </div>
+
 @endsection

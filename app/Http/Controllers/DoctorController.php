@@ -31,8 +31,8 @@ class DoctorController extends Controller
     public function create()
     {
         $data = [
-          'rules'   => Role::where('name', '!=', 'patient')->get(),
-          'genders' => Gender::get(),
+          'rules'   => Role::where('name', '!=', 'patient')->get()->pluck('name', 'id')->prepend('select role', 0),
+          'genders' => Gender::get()->pluck('name', 'id')->prepend('select gender', 0),
         ];
 
         return view('admin.doctor.create', $data);
@@ -46,20 +46,32 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateStorage($request);
+        $this->validate($request, [
+            'name'          => 'required',
+            'email'         => 'required|unique:users',
+            'password'      => 'required|min:6|max:25',
+            'gender_id'     => 'required|not_in:0',
+            'education'     => 'required',
+            'address'       => 'required',
+            'department'    => 'required',
+            'phone_number'  => 'required|numeric',
+            'image'         => 'required|mimes:jpge,jpg,png',
+            'role_id'       => 'required|not_in:0',
+            'description'   => 'required',
+        ]);
 
-        $image_name         = '';
+        $imageName          = '';
 
         if(!empty($_FILES['image']['name']))
         {
-            $image_name     = (new User())->userAvatar($request);
+            $imageName      = (new User())->userAvatar($request);
         }
 
         $user               = new User();
         $user->name         = $request->name;
         $user->email        = $request->email;
         $user->password     = bcrypt($request->password);
-        $user->image        = $image_name;
+        $user->image        = $imageName;
         $user->role_id      = $request->role_id;
         $user->address      = $request->address;
         $user->phone_number = $request->phone_number;
@@ -101,8 +113,8 @@ class DoctorController extends Controller
     {
         $data = [
             'user'    => User::where('id', $id)->first(),
-            'rules'   => Role::where('name', '!=', 'patient')->get(),
-            'genders' => Gender::get(),
+            'rules'   => Role::where('name', '!=', 'patient')->get()->pluck('name', 'id')->prepend('select role', 0),
+            'genders' => Gender::get()->pluck('name', 'id')->prepend('select gender', 0),
         ];
 
         return view('admin.doctor.edit', $data);
@@ -117,14 +129,25 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validateUpdate($request, $id);
+        $this->validate($request, [
+            'name'          => 'required',
+            'email'         => 'required|unique:users,email,'.$id,
+            'gender_id'     => 'required|not_in:0',
+            'education'     => 'required',
+            'address'       => 'required',
+            'department'    => 'required',
+            'phone_number'  => 'required|numeric',
+            'image'         => 'mimes:jpge,jpg,png',
+            'role_id'       => 'required|not_in:0',
+            'description'   => 'required',
+        ]);
 
         $user               = User::find($id);
-        $image_name         = '';
+        $imageName          = '';
 
         if(!empty($_FILES['image']['name']))
         {
-            $image_name     = (new User())->userAvatar($request);
+            $imageName      = (new User())->userAvatar($request);
             unlink(public_path('images/users/'.$user->image));
         }
 
@@ -143,11 +166,10 @@ class DoctorController extends Controller
             $user->password = bcrypt($request->password);
         }
 
-        if($image_name != '')
+        if($imageName != '')
         {
-            $user->image    = $image_name;
+            $user->image    = $imageName;
         }
-
 
         $user->update();
 
@@ -188,38 +210,5 @@ class DoctorController extends Controller
         }
 
         return response()->json($response);
-    }
-
-    private function validateStorage(Request $request)
-    {
-        return $this->validate($request, [
-            'name'          => 'required',
-            'email'         => 'required|unique:users',
-            'password'      => 'required|min:6|max:25',
-            'gender_id'     => 'required|not_in:0',
-            'education'     => 'required',
-            'address'       => 'required',
-            'department'    => 'required',
-            'phone_number'  => 'required|numeric',
-            'image'         => 'required|mimes:jpge,jpg,png',
-            'role_id'       => 'required|not_in:0',
-            'description'   => 'required',
-        ]);
-    }
-
-    private function validateUpdate(Request $request, $id)
-    {
-        return $this->validate($request, [
-            'name'          => 'required',
-            'email'         => 'required|unique:users,email,'.$id,
-            'gender_id'     => 'required|not_in:0',
-            'education'     => 'required',
-            'address'       => 'required',
-            'department'    => 'required',
-            'phone_number'  => 'required|numeric',
-            'image'         => 'mimes:jpge,jpg,png',
-            'role_id'       => 'required|not_in:0',
-            'description'   => 'required',
-        ]);
     }
 }

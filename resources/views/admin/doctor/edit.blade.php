@@ -64,11 +64,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label for="">Gender</label>
-                                <select name="gender_id" class="form-control @error('gender_id') is-invalid @enderror">
-                                    @foreach($genders as $gender)
-                                        <option value="{{ $gender->id }}" {{ ($gender->id == $user->gender_id )? 'selected' : '' }}> {{ $gender->name }} </option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('gender_id', $genders, $user->gender_id, ['id' => 'gender_id', 'class' => 'gender_id form-control']) !!}
                                 @error('gender_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -128,12 +124,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <label for="">Rules</label>
-                                <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
-                                    <option value="0"> please select role </option>
-                                    @foreach($rules as $role)
-                                        <option value="{{ $role->id }}" {{ ($role->id == $user->role_id )? 'selected' : '' }}> {{ $role->name }} </option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('role_id', $rules, $user->role_id, ['id' => 'role_id', 'class' => 'role_id form-control']) !!}
+
                                 @error('role_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
